@@ -2,7 +2,48 @@ import react from 'react'
 
 const Calculator = () => {
 
-    const numberButtons = document.querySelectorAll('[data-number')
+    class Calculator {
+        constructor(prevOpTextEl, curOpTextEl) {
+            this.prevOpTextEl = prevOpTextEl
+            this.curOpTextEl = curOpTextEl
+        }
+
+        clear() {
+            this.currentOperand = ''
+            this.previousOperand = ''
+            this.operation = ''
+        }
+
+        delete() {
+
+        }
+
+        appendNumber(number) {
+
+        }
+
+        chooseOperation(operation){
+
+        }
+
+        compute() {
+
+        }
+
+        updateDisplay() {
+
+        }
+
+    }
+
+    const numberButtons = document.querySelectorAll('[data-number]');
+    const operationButtons = document.querySelectorAll('[data-operation]');
+    const equalsButton = document.querySelectorAll('[data-equals]');
+    const deleteButton = document.querySelectorAll('[data-delete]');
+    const allClearButton = document.querySelectorAll('[data-all-clear]');
+    const prevOpTextEl = document.querySelectorAll('[data-previous-operand]');
+    const curOpTextEl = document.querySelectorAll('[data-current-operand]');
+
 
 
 
