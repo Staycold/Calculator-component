@@ -6,12 +6,13 @@ const Calculator = () => {
         constructor(prevOpTextEl, curOpTextEl) {
             this.prevOpTextEl = prevOpTextEl
             this.curOpTextEl = curOpTextEl
+            this.clear()
         }
 
         clear() {
             this.currentOperand = ''
             this.previousOperand = ''
-            this.operation = ''
+            this.operation = undefined
         }
 
         delete() {
@@ -19,11 +20,14 @@ const Calculator = () => {
         }
 
         appendNumber(number) {
-
+            if (number === '.' && this.currentOperand.includes('.')) return
+            this.currentOperand = this.currentOperand.toString() + number.toString()
         }
 
         chooseOperation(operation){
-
+            this.operation = operation
+            this.previousOperand = this.currentOperand
+            this.currentOperand = ''
         }
 
         compute() {
@@ -31,7 +35,8 @@ const Calculator = () => {
         }
 
         updateDisplay() {
-
+            this.curOpTextEl.innerText = this.currentOperand
+            this.prevOpTextEl.innerText = this.previousOperand
         }
 
     }
@@ -44,8 +49,22 @@ const Calculator = () => {
     const prevOpTextEl = document.querySelectorAll('[data-previous-operand]');
     const curOpTextEl = document.querySelectorAll('[data-current-operand]');
 
+    const calculator = new Calculator( prevOpTextEl, curOpTextEl)
+
+numberButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.appendNumber(button.innerText)
+        calculator.updateDisplay()
+    })
+})
 
 
+operationButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        calculator.chooseOperation(button.innerText)
+        calculator.updateDisplay()
+    })
+})
 
 
     
