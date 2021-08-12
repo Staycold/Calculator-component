@@ -16,7 +16,7 @@ const Calculator = () => {
         }
 
         delete() {
-
+            this.currentOperand = this.currentOperand.toString().slice(0, -1)
         }
 
         appendNumber(number) {
@@ -25,18 +25,53 @@ const Calculator = () => {
         }
 
         chooseOperation(operation){
+            if (this.currentOperand === '') return
+            if ( this.previousOperand !== '') {
+                this.compute()
+            }
             this.operation = operation
             this.previousOperand = this.currentOperand
             this.currentOperand = ''
         }
 
         compute() {
+            let computation 
+            const prev = parseFloat(this.previousOperand)
+            const current = parseFloat(this.currentOperand)
+            if (isNaN(prev) || isNaN(current)) return
+            switch (this.operation) {
+                case '+':
+                    computation = prev + current
+                    break
+                case '-':
+                    computation = prev - current
+                    break
+                case '*':
+                    computation = prev * current
+                    break
+                case '/':
+                    computation = prev / current
+                    break
+                default:
+                    return
+            }
+            this.currentOperand = computation
+            this.operation = undefined
+            this.previousOperand = ''
+        }
 
+        getDisplayNumber(number) {
+            const floatNumber = parseFloat(number)
+            if (isNaN(floatNumber))
+            return number
         }
 
         updateDisplay() {
-            this.curOpTextEl.innerText = this.currentOperand
-            this.prevOpTextEl.innerText = this.previousOperand
+            this.curOpTextEl.innerText = this.getDisplayNumber(this.currentOperand)
+            if ( this.operationg != null) {
+                this.prevOpTextEl.innerText =
+                 `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
+            }           
         }
 
     }
@@ -66,7 +101,23 @@ operationButtons.forEach(button => {
     })
 })
 
+equalsButton.addEventListener('click', button => {
+    calculator.compute()
+    calculator.updateDisplay()
 
+})
+
+allClearButton.addEventListener('click', button => {
+    calculator.clear()
+    calculator.updateDisplay()
+
+})
+
+deleteButton.addEventListener('click', button => {
+    calculator.delete()
+    calculator.updateDisplay()
+
+})
     
 
 return(
